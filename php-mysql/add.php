@@ -43,8 +43,21 @@
 		if(array_filter($errors)){
 			// echo 'errors in the form';
 		}else{
-			// echo 'form is valid'
-			header('Location: index.php');
+
+			$email = mysqli_real_escape_string($conn, $_POST['email']) //pdo
+			$title = mysqli_real_escape_string($conn, $_POST['title']) //pdo
+			$ingredients = mysqli_real_escape_string($conn, $_POST['ingredients']) //pdo
+
+			//create sql
+			$sql = "INSERT INTO pizzas(title, email, ingredients) VALUES('$title','$email','$ingredents')";
+
+			// save to db and check
+			if(mysqli_query($conn, $sql)){
+				//success echo 'form is valid'
+				header('Location: index.php');
+			}else{
+				echo 'query error: ' . mysqli_error($conn);
+			}
 		}
 	} // end POST check
 
